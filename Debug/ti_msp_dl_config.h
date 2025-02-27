@@ -142,7 +142,12 @@ extern "C" {
 #define TIMER_1_INST                                                     (TIMA1)
 #define TIMER_1_INST_IRQHandler                                 TIMA1_IRQHandler
 #define TIMER_1_INST_INT_IRQN                                   (TIMA1_INT_IRQn)
-#define TIMER_1_INST_LOAD_VALUE                                         (15999U)
+#define TIMER_1_INST_LOAD_VALUE                                         (64999U)
+/* Defines for TIMER_2 */
+#define TIMER_2_INST                                                     (TIMG8)
+#define TIMER_2_INST_IRQHandler                                 TIMG8_IRQHandler
+#define TIMER_2_INST_INT_IRQN                                   (TIMG8_INT_IRQn)
+#define TIMER_2_INST_LOAD_VALUE                                          (4999U)
 
 
 
@@ -262,6 +267,7 @@ void SYSCFG_DL_PWM_1_init(void);
 void SYSCFG_DL_PWM_2_init(void);
 void SYSCFG_DL_TIMER_0_init(void);
 void SYSCFG_DL_TIMER_1_init(void);
+void SYSCFG_DL_TIMER_2_init(void);
 void SYSCFG_DL_ADC12_0_init(void);
 void SYSCFG_DL_COMP_0_init(void);
 void SYSCFG_DL_COMP_1_init(void);

@@ -1,40 +1,11 @@
-/*
- * Copyright (c) 2023, Texas Instruments Incorporated
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * *  Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * *  Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * *  Neither the name of Texas Instruments Incorporated nor the names of
- *    its contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
 #include "ti/devices/msp/m0p/mspm0g350x.h"
 #include "ti/driverlib/dl_gpio.h"
+#include "ti/driverlib/dl_timera.h"
+#include "ti/driverlib/dl_timerg.h"
 #include "ti_msp_dl_config.h"
+//#include <cstdint>
 
-/* This results in approximately 0.5s of delay assuming 32MHz CPU_CLK */
+/* This results in approximately 0.5s of delay assuming 80MHz CPU_CLK */
 #define DELAY (40000000)
 
 
@@ -59,17 +30,13 @@ int main(void)
 
     NVIC_EnableIRQ(ADC12_0_INST_INT_IRQN);
    // NVIC_EnableIRQ(TIMER_0_INST_INT_IRQN);
-    //NVIC_EnableIRQ(TIMER_1_INST_INT_IRQN);
+    NVIC_EnableIRQ(TIMER_1_INST_INT_IRQN);
+    NVIC_EnableIRQ(TIMER_2_INST_INT_IRQN);
      NVIC_EnableIRQ(COMP0_INT_IRQn);
      NVIC_EnableIRQ(COMP1_INT_IRQn);
-    //DL_TimerG_startCounter(TIMER_0_INST);
+    DL_TimerA_startCounter(TIMER_1_INST);
     
     while (1) {
-        /*
-         * Call togglePins API to flip the current value of LEDs 1-3. This
-         * API causes the corresponding HW bits to be flipped by the GPIO HW
-         * without need for additional R-M-W cycles by the processor.
-         */
         //delay_cycles(DELAY);
         // DL_GPIO_togglePins(GPIO_OUT_PORT, GPIO_OUT_LED1_PIN);
     }
@@ -78,24 +45,20 @@ int main(void)
 
 unsigned int utick = 0;//滴答定时器中断计数
 
-void SysTick_Handler(void){
 
-    SysTick->CTRL &= ~(1 << 16); /*清除滴答定时器中断标志位*/
-    utick++;//滴答定时器中断计数
+// 找峰值逻辑
+// * 比较器中断触发DMA采集，采集时间为1ms
+// * 采集完成触发中断，找到最大值
 
-    if(utick % 500 == 0){
-        DL_GPIO_togglePins(LED_PORT, LED_LED1_PIN);
+// 测时间间隔逻辑
+// * 中断读取定时器值，并将定时器清零
+// * 判断数据是否有效，更新数据和数据index
+// * 如果是最后一个数据，进入测距任务
 
-    }
-}
-
-//ADC采集逻辑
-//对于40k的正弦波，用400k连续采(timer trig)，采集一次触发中断
-//脉冲的检测方法：
-//0. 阈值vth，低于这个阈值的小脉冲忽略（状态0），决定通信的范围。初始化pulse_t1=0
-//1. 按照通道0触发，过了这个阈值之后进入状态1，初始为时间adc_t=0，记录脉冲的最高值以及对应的时间戳pulse_t0
-//2. 下降过了vth后进入状态2，之前的脉冲间隔=pulse_t0+pulse_t1，判断脉冲间隔是否合理，更新数据序号以及更新数据；
-//   adc_t继续增长，直到上升过了vth，脉冲间隔更新pulse_t1=adc_t-pulse_t0，然后回到状态1
+// 测距逻辑
+// * 切换到850mV阈值4ms
+// * 如果1-4ms内触发了，测量触发时间，并标志为检测到；否则标志为没检测到
+// * 4ms后切换回原来阈值，回到state 0
 
 uint32_t adc_t = 0;
 uint32_t pulse_t0 = 0, pulse_t1 = 0;
@@ -130,20 +93,22 @@ int16_t adc0_0 = 0, adc0_1 = 0;
 //     }
 // }
 
-// void TIMER_1_INST_IRQHandler(void)
-// {
-//     switch (DL_TimerG_getPendingInterrupt(TIMER_1_INST)) {
-//         case DL_TIMER_IIDX_ZERO:
-//             //NVIC_EnableIRQ(COMP0_INT_IRQn);
-            
-//             //DL_GPIO_togglePins(TEST_PORT, TEST_PIN_0_PIN);
-//             break;
-//         default:
-//             break;
-//     }
-// }
 
 uint32_t comp_t0 = 0, comp_t1 = 0;
+int32_t pulse_width;
+
+#define data_n 5
+int32_t data[data_n];
+int data_i = 0;
+int recv0 = 0, recv1 = 0;
+
+// 状态：
+// 0. 等待数据
+// 1. 接收数据包
+// 2. 测距
+int remote_state = 0;
+uint32_t dac0 = 113, dac_th = (uint32_t)(850*256/3300);
+int detected = 0, detect_t = 0;
 
 void GROUP1_IRQHandler(void)
 {
@@ -152,6 +117,54 @@ void GROUP1_IRQHandler(void)
             if(utick - comp_t0 >= 4){
                 comp_t0 = utick;
                 DL_GPIO_togglePins(TEST_PORT, TEST_PIN_0_PIN);
+
+                // 测时间间隔逻辑
+                // * 中断读取定时器值，并将定时器清零
+                // * 判断数据是否有效，更新数据和数据index
+                // * 如果是最后一个数据，进入测距任务
+                pulse_width = DL_TimerA_getTimerCount(TIMER_1_INST);
+                DL_TimerA_setTimerCount(TIMER_1_INST, 0);
+
+                switch (remote_state) {
+                    case 0:{
+                        if(pulse_width > 30000 && pulse_width < 50000){
+                            data_i = 0;
+                            remote_state = 1;   
+                        }
+                    } break;
+                    case 1:{
+                        if(data_i < 5){
+                            if(pulse_width < 20000){
+                                data[data_i++] = pulse_width;
+                            }else{
+                                remote_state = 0;
+                            }
+                        }
+
+                        
+                        if(data_i >= 5){
+                            DL_TimerG_setCaptureCompareValue(PWM_0_INST, 500, DL_TIMER_CC_0_INDEX);
+                            DL_TimerG_startCounter(TIMER_2_INST);
+                            remote_state = 2;
+                            DL_COMP_setDACCode0(COMP_0_INST, dac0+dac_th);
+                        } 
+
+                    } break;
+                    case 2:{
+                        // 测距逻辑
+                        // * 切换到850mV阈值4ms
+                        // * 如果1-4ms内触发了，测量触发时间，并标志为检测到；否则标志为没检测到
+                        // * 4ms后切换回原来阈值，回到state 0
+
+
+                    } break;
+                    default: break;
+                }
+
+            }else if(DL_TimerA_getTimerCount(TIMER_1_INST) >= 1000 && remote_state == 2){
+                detected = 1;
+                detect_t = DL_TimerA_getTimerCount(TIMER_1_INST);
+                remote_state = 3;
             }
 
         }break;
@@ -172,5 +185,49 @@ void GROUP1_IRQHandler(void)
             break;
         default:
             break;
+    }
+}
+
+void TIMER_1_INST_IRQHandler(void)
+{
+    switch (DL_TimerG_getPendingInterrupt(TIMER_1_INST)) {
+        case DL_TIMER_IIDX_OVERFLOW:
+            remote_state = 0;
+            break;
+        default:
+            break;
+    }
+}
+
+void TIMER_2_INST_IRQHandler(void)
+{
+    switch (DL_TimerG_getPendingInterrupt(TIMER_2_INST)) {
+        case DL_TIMER_IIDX_ZERO:
+            DL_TimerG_setCaptureCompareValue(PWM_0_INST, 999, DL_TIMER_CC_0_INDEX);
+            break;
+        default:
+            break;
+    }
+}
+
+void SysTick_Handler(void){
+
+    SysTick->CTRL &= ~(1 << 16); /*清除滴答定时器中断标志位*/
+    utick++;//滴答定时器中断计数
+
+    if(utick % 500 == 0){
+        DL_GPIO_togglePins(LED_PORT, LED_LED1_PIN);
+
+    }
+
+    if(utick - comp_t0 >= 4){
+        if(remote_state == 2){ //没检测到
+            detected = 0;
+            remote_state = 0;
+            DL_COMP_setDACCode0(COMP_0_INST, dac0);
+        }else if(remote_state == 3){ //检测到
+            remote_state = 0;
+            DL_COMP_setDACCode0(COMP_0_INST, dac0);
+        }
     }
 }

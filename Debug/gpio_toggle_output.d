@@ -33,6 +33,9 @@ gpio_toggle_output.o: ../gpio_toggle_output.c \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_gpio.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/msp.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_common.h \
+ C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timera.h \
+ C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timer.h \
+ C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timerg.h \
  ti_msp_dl_config.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/driverlib.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_adc12.h \
@@ -64,9 +67,6 @@ gpio_toggle_output.o: ../gpio_toggle_output.c \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_scratchpad.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_spi.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_tamperio.h \
- C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timera.h \
- C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timer.h \
- C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timerg.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_trng.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_uart_extend.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_uart.h \
@@ -107,6 +107,9 @@ C:/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/peripherals/m0p/sysctl/hw_sysct
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_gpio.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/msp.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_common.h:
+C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timera.h:
+C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timer.h:
+C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timerg.h:
 ti_msp_dl_config.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/driverlib.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_adc12.h:
@@ -138,9 +141,6 @@ C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_rtc_b.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_scratchpad.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_spi.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_tamperio.h:
-C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timera.h:
-C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timer.h:
-C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timerg.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_trng.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_uart_extend.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_uart.h:

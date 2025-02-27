@@ -29,6 +29,7 @@ const SYSTICK = scripting.addModule("/ti/driverlib/SYSTICK");
 const TIMER   = scripting.addModule("/ti/driverlib/TIMER", {}, false);
 const TIMER1  = TIMER.addInstance();
 const TIMER2  = TIMER.addInstance();
+const TIMER3  = TIMER.addInstance();
 const VREF    = scripting.addModule("/ti/driverlib/VREF");
 
 /**
@@ -132,13 +133,13 @@ OPA2.advRRI                = true;
 OPA2.In1NegPinConfig.$name = "ti_driverlib_gpio_GPIOPinGeneric9";
 OPA2.OutPinConfig.$name    = "ti_driverlib_gpio_GPIOPinGeneric11";
 
-PWM1.$name                   = "PWM_0";
-PWM1.ccIndex                 = [0];
-PWM1.timerStartTimer         = true;
-PWM1.peripheral.$assign      = "TIMG0";
-PWM1.PWM_CHANNEL_0.$name     = "ti_driverlib_pwm_PWMTimerCC0";
-PWM1.PWM_CHANNEL_0.dutyCycle = 50;
-PWM1.ccp0PinConfig.$name     = "ti_driverlib_gpio_GPIOPinGeneric0";
+PWM1.$name                 = "PWM_0";
+PWM1.ccIndex               = [0];
+PWM1.timerStartTimer       = true;
+PWM1.peripheral.$assign    = "TIMG0";
+PWM1.PWM_CHANNEL_0.$name   = "ti_driverlib_pwm_PWMTimerCC0";
+PWM1.PWM_CHANNEL_0.ccValue = 999;
+PWM1.ccp0PinConfig.$name   = "ti_driverlib_gpio_GPIOPinGeneric0";
 
 PWM2.$name                      = "PWM_1";
 PWM2.timerCount                 = 4000;
@@ -188,11 +189,18 @@ TIMER1.event1PublisherChannel      = 1;
 TIMER1.counterZero                 = true;
 
 TIMER2.$name              = "TIMER_1";
-TIMER2.timerPeriod        = "4 ms";
-TIMER2.timerClkPrescale   = 20;
-TIMER2.interrupts         = ["ZERO"];
-TIMER2.interruptPriority  = "0";
+TIMER2.timerClkPrescale   = 80;
+TIMER2.timerPeriod        = "65 ms";
+TIMER2.timerMode          = "PERIODIC_UP";
+TIMER2.interrupts         = ["OVERFLOW"];
+TIMER2.interruptPriority  = "2";
 TIMER2.peripheral.$assign = "TIMA1";
+
+TIMER3.$name              = "TIMER_2";
+TIMER3.timerPeriod        = "0.5ms";
+TIMER3.timerClkPrescale   = 4;
+TIMER3.interrupts         = ["ZERO"];
+TIMER3.peripheral.$assign = "TIMG8";
 
 VREF.vrefPosPinConfig.$name = "ti_driverlib_gpio_GPIOPinGeneric7";
 
