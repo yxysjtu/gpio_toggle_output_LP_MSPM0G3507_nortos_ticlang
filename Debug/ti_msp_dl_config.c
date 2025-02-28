@@ -171,8 +171,20 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 
     DL_GPIO_initDigitalOutput(TEST_PIN_1_IOMUX);
 
-    DL_GPIO_clearPins(LED_PORT, LED_LED1_PIN);
-    DL_GPIO_enableOutput(LED_PORT, LED_LED1_PIN);
+    DL_GPIO_initDigitalOutput(RECV_INDICATOR_RECV0_IOMUX);
+
+    DL_GPIO_initDigitalOutput(RECV_INDICATOR_RECV1_IOMUX);
+
+    DL_GPIO_initDigitalOutput(RECV_INDICATOR_DETECTED_IOMUX);
+
+    DL_GPIO_clearPins(GPIOA, LED_LED1_PIN |
+		RECV_INDICATOR_RECV0_PIN |
+		RECV_INDICATOR_RECV1_PIN |
+		RECV_INDICATOR_DETECTED_PIN);
+    DL_GPIO_enableOutput(GPIOA, LED_LED1_PIN |
+		RECV_INDICATOR_RECV0_PIN |
+		RECV_INDICATOR_RECV1_PIN |
+		RECV_INDICATOR_DETECTED_PIN);
     DL_GPIO_clearPins(TEST_PORT, TEST_PIN_0_PIN |
 		TEST_PIN_1_PIN);
     DL_GPIO_enableOutput(TEST_PORT, TEST_PIN_0_PIN |
@@ -455,7 +467,7 @@ static const DL_TimerG_ClockConfig gTIMER_2ClockConfig = {
 
 /*
  * Timer load value (where the counter starts from) is calculated as (timerPeriod * timerClockFreq) - 1
- * TIMER_2_INST_LOAD_VALUE = (0.5ms * 10000000 Hz) - 1
+ * TIMER_2_INST_LOAD_VALUE = (0.3ms * 10000000 Hz) - 1
  */
 static const DL_TimerG_TimerConfig gTIMER_2TimerConfig = {
     .period     = TIMER_2_INST_LOAD_VALUE,

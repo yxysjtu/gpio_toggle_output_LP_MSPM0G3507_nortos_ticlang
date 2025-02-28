@@ -147,7 +147,7 @@ extern "C" {
 #define TIMER_2_INST                                                     (TIMG8)
 #define TIMER_2_INST_IRQHandler                                 TIMG8_IRQHandler
 #define TIMER_2_INST_INT_IRQN                                   (TIMG8_INT_IRQn)
-#define TIMER_2_INST_LOAD_VALUE                                          (4999U)
+#define TIMER_2_INST_LOAD_VALUE                                          (2999U)
 
 
 
@@ -259,6 +259,18 @@ extern "C" {
 /* Defines for PIN_1: GPIOB.9 with pinCMx 26 on package pin 23 */
 #define TEST_PIN_1_PIN                                           (DL_GPIO_PIN_9)
 #define TEST_PIN_1_IOMUX                                         (IOMUX_PINCM26)
+/* Port definition for Pin Group RECV_INDICATOR */
+#define RECV_INDICATOR_PORT                                              (GPIOA)
+
+/* Defines for RECV0: GPIOA.9 with pinCMx 20 on package pin 17 */
+#define RECV_INDICATOR_RECV0_PIN                                 (DL_GPIO_PIN_9)
+#define RECV_INDICATOR_RECV0_IOMUX                               (IOMUX_PINCM20)
+/* Defines for RECV1: GPIOA.8 with pinCMx 19 on package pin 16 */
+#define RECV_INDICATOR_RECV1_PIN                                 (DL_GPIO_PIN_8)
+#define RECV_INDICATOR_RECV1_IOMUX                               (IOMUX_PINCM19)
+/* Defines for DETECTED: GPIOA.10 with pinCMx 21 on package pin 18 */
+#define RECV_INDICATOR_DETECTED_PIN                             (DL_GPIO_PIN_10)
+#define RECV_INDICATOR_DETECTED_IOMUX                            (IOMUX_PINCM21)
 
 
 

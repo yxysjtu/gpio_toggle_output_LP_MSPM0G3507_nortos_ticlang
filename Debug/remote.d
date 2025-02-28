@@ -1,6 +1,6 @@
 # FIXED
 
-gpio_toggle_output.o: ../gpio_toggle_output.c \
+remote.o: ../remote.c ../remote.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/m0p/mspm0g350x.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/third_party/CMSIS/Core/Include/core_cm0plus.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/peripherals/hw_adc12.h \
@@ -74,8 +74,8 @@ gpio_toggle_output.o: ../gpio_toggle_output.c \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_vref.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_wwdt.h \
  C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_interrupt.h \
- C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_systick.h \
- ../remote.h
+ C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_systick.h
+../remote.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/m0p/mspm0g350x.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/third_party/CMSIS/Core/Include/core_cm0plus.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/peripherals/hw_adc12.h:
@@ -150,4 +150,3 @@ C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_vref.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_wwdt.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_interrupt.h:
 C:/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_systick.h:
-../remote.h:

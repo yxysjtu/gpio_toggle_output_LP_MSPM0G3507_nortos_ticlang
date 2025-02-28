@@ -13,6 +13,7 @@ ORDERED_OBJS += \
 "./gpio_toggle_output.o" \
 "./ti_msp_dl_config.o" \
 "./startup_mspm0g350x_ticlang.o" \
+"./remote.o" \
 $(GEN_CMDS__FLAG) \
 -Wl,-ldevice.cmd.genlibs \
 -Wl,-llibc.a \
@@ -143,8 +144,8 @@ gpio_toggle_output_LP_MSPM0G3507_nortos_ticlang.out: $(OBJS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "gpio_toggle_output.o" "ti_msp_dl_config.o" "startup_mspm0g350x_ticlang.o" 
-	-$(RM) "gpio_toggle_output.d" "ti_msp_dl_config.d" "startup_mspm0g350x_ticlang.d" 
+	-$(RM) "gpio_toggle_output.o" "ti_msp_dl_config.o" "startup_mspm0g350x_ticlang.o" "remote.o" 
+	-$(RM) "gpio_toggle_output.d" "ti_msp_dl_config.d" "startup_mspm0g350x_ticlang.d" "remote.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
