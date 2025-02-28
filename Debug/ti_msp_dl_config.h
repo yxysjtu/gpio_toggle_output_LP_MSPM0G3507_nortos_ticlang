@@ -136,7 +136,7 @@ extern "C" {
 #define TIMER_0_INST                                                     (TIMA0)
 #define TIMER_0_INST_IRQHandler                                 TIMA0_IRQHandler
 #define TIMER_0_INST_INT_IRQN                                   (TIMA0_INT_IRQn)
-#define TIMER_0_INST_LOAD_VALUE                                           (799U)
+#define TIMER_0_INST_LOAD_VALUE                                            (39U)
 #define TIMER_0_INST_PUB_0_CH                                                (1)
 /* Defines for TIMER_1 */
 #define TIMER_1_INST                                                     (TIMA1)
@@ -238,6 +238,12 @@ extern "C" {
 
 
 
+/* Defines for DMA_CH0 */
+#define DMA_CH0_CHAN_ID                                                      (0)
+#define ADC12_0_INST_DMA_TRIGGER                      (DMA_ADC0_EVT_GEN_BD_TRIG)
+
+
+
 /* Port definition for Pin Group LED */
 #define LED_PORT                                                         (GPIOA)
 
@@ -274,6 +280,7 @@ void SYSCFG_DL_COMP_1_init(void);
 void SYSCFG_DL_VREF_init(void);
 void SYSCFG_DL_OPA_0_init(void);
 void SYSCFG_DL_OPA_1_init(void);
+void SYSCFG_DL_DMA_init(void);
 
 void SYSCFG_DL_SYSTICK_init(void);
 
