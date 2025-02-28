@@ -3,6 +3,8 @@
 Remote_t remote;
 
 void Remote_init(){
+    remote.mode = 0;
+
     /* Setup interrupts on device */
     NVIC_EnableIRQ(ADC12_0_INST_INT_IRQN);
    // NVIC_EnableIRQ(TIMER_0_INST_INT_IRQN);
@@ -110,6 +112,12 @@ void Remote_Handler(){
     remote.detected = detected;
     remote.detect_distance = detect_t;
     
+    if(remote.state){
+        if(remote.data[2] < 5000) remote.mode = 0;
+        else remote.mode = 1;
+    }
+    remote.vrx = remote.data[4];
+    remote.vry = remote.data[3];
 }
 
 void dma_start(int channel){

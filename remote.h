@@ -19,17 +19,18 @@ typedef struct{
     int recv_left; //左接收头是否接收到
     int recv_right; //右接收头是否接收到
     int recv_strength; //接收强度平均
-    int left_strength; //左接收头接收强度
+    int left_strength; //左接收头接收强度，这个值为一个常量+接收强度，常量大概是一千多
     int right_strength; //右接收头接收强度
     int direction; //声源方向，大于0为偏右
 
     //避障
     int detected; //是否有障碍物
-    // int detected_left;
-    // int detected_right;
     int detect_distance; //障碍物距离，1000大致对应10cm
-    // int detect_right_distance;
 
+    //解析数据
+    int mode;
+    int vrx;
+    int vry;
 
 } Remote_t;
 
