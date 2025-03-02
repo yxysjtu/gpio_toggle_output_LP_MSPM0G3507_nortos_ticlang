@@ -1,3 +1,4 @@
+"./battery.o"
 "./gpio_toggle_output.o"
 "./ti_msp_dl_config.o"
 "./startup_mspm0g350x_ticlang.o"
