@@ -5,6 +5,7 @@
 #include "ti/driverlib/dl_timerg.h"
 #include "ti_msp_dl_config.h"
 #include "remote.h"
+#include "battery.h"
 
 /* This results in approximately 0.5s of delay assuming 80MHz CPU_CLK */
 #define DELAY (40000000)
@@ -31,6 +32,7 @@ int main(void)
 
 
     Remote_init();
+    Battery_Init();
     
     while (1) {
         //delay_cycles(DELAY);
@@ -52,4 +54,5 @@ void SysTick_Handler(void){
     }
 
     Remote_Handler();
+    Battery_Handler();
 }
