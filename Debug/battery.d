@@ -1,6 +1,6 @@
 # FIXED
 
-remote.o: ../remote.c ../remote.h \
+battery.o: ../battery.c ../battery.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/m0p/mspm0g350x.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/third_party/CMSIS/Core/Include/core_cm0plus.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/peripherals/hw_adc12.h \
@@ -36,9 +36,6 @@ remote.o: ../remote.c ../remote.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_factoryregion.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_core.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_gpio.h \
- /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timera.h \
- /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timer.h \
- /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timerg.h \
  ti_msp_dl_config.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/driverlib.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_aes.h \
@@ -67,6 +64,9 @@ remote.o: ../remote.c ../remote.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_scratchpad.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_spi.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_tamperio.h \
+ /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timera.h \
+ /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timer.h \
+ /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timerg.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_trng.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_uart_extend.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_uart.h \
@@ -75,7 +75,7 @@ remote.o: ../remote.c ../remote.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_wwdt.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_interrupt.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_systick.h
-../remote.h:
+../battery.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/m0p/mspm0g350x.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/third_party/CMSIS/Core/Include/core_cm0plus.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/peripherals/hw_adc12.h:
@@ -111,9 +111,6 @@ remote.o: ../remote.c ../remote.h \
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_factoryregion.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_core.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_gpio.h:
-/Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timera.h:
-/Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timer.h:
-/Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timerg.h:
 ti_msp_dl_config.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/driverlib.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_aes.h:
@@ -142,6 +139,9 @@ ti_msp_dl_config.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_scratchpad.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_spi.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_tamperio.h:
+/Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timera.h:
+/Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timer.h:
+/Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_timerg.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_trng.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_uart_extend.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_uart.h:

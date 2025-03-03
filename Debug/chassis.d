@@ -1,6 +1,6 @@
 # FIXED
 
-remote.o: ../remote.c ../remote.h \
+chassis.o: ../chassis.c ../chassis.h ../remote.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/m0p/mspm0g350x.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/third_party/CMSIS/Core/Include/core_cm0plus.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/peripherals/hw_adc12.h \
@@ -74,7 +74,9 @@ remote.o: ../remote.c ../remote.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_vref.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_wwdt.h \
  /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_interrupt.h \
- /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_systick.h
+ /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_systick.h \
+ ../motor.h
+../chassis.h:
 ../remote.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/devices/msp/m0p/mspm0g350x.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/third_party/CMSIS/Core/Include/core_cm0plus.h:
@@ -150,3 +152,4 @@ ti_msp_dl_config.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/dl_wwdt.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_interrupt.h:
 /Applications/ti/mspm0_sdk_2_03_00_07/source/ti/driverlib/m0p/dl_systick.h:
+../motor.h:

@@ -168,6 +168,16 @@ extern "C" {
 #define GPIO_ADC12_0_C1_PORT                                               GPIOA
 #define GPIO_ADC12_0_C1_PIN                                       DL_GPIO_PIN_26
 
+/* Defines for ADC12_1 */
+#define ADC12_1_INST                                                        ADC1
+#define ADC12_1_INST_IRQHandler                                  ADC1_IRQHandler
+#define ADC12_1_INST_INT_IRQN                                    (ADC1_INT_IRQn)
+#define ADC12_1_ADCMEM_0                                      DL_ADC12_MEM_IDX_0
+#define ADC12_1_ADCMEM_0_REF                     DL_ADC12_REFERENCE_VOLTAGE_VDDA
+#define ADC12_1_ADCMEM_0_REF_VOLTAGE_V                                       3.3
+#define GPIO_ADC12_1_C0_PORT                                               GPIOA
+#define GPIO_ADC12_1_C0_PIN                                       DL_GPIO_PIN_15
+
 
 
 /* Defines for COMP_0 */
@@ -250,6 +260,12 @@ extern "C" {
 /* Defines for LED1: GPIOA.7 with pinCMx 14 on package pin 13 */
 #define LED_LED1_PIN                                             (DL_GPIO_PIN_7)
 #define LED_LED1_IOMUX                                           (IOMUX_PINCM14)
+/* Port definition for Pin Group BEEP */
+#define BEEP_PORT                                                        (GPIOB)
+
+/* Defines for BEEP1: GPIOB.2 with pinCMx 15 on package pin 14 */
+#define BEEP_BEEP1_PIN                                           (DL_GPIO_PIN_2)
+#define BEEP_BEEP1_IOMUX                                         (IOMUX_PINCM15)
 /* Port definition for Pin Group TEST */
 #define TEST_PORT                                                        (GPIOB)
 
@@ -287,6 +303,7 @@ void SYSCFG_DL_TIMER_0_init(void);
 void SYSCFG_DL_TIMER_1_init(void);
 void SYSCFG_DL_TIMER_2_init(void);
 void SYSCFG_DL_ADC12_0_init(void);
+void SYSCFG_DL_ADC12_1_init(void);
 void SYSCFG_DL_COMP_0_init(void);
 void SYSCFG_DL_COMP_1_init(void);
 void SYSCFG_DL_VREF_init(void);

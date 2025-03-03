@@ -62,6 +62,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_init(void)
     SYSCFG_DL_TIMER_1_init();
     SYSCFG_DL_TIMER_2_init();
     SYSCFG_DL_ADC12_0_init();
+    SYSCFG_DL_ADC12_1_init();
     SYSCFG_DL_COMP_0_init();
     SYSCFG_DL_COMP_1_init();
     SYSCFG_DL_VREF_init();
@@ -116,6 +117,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_TimerA_reset(TIMER_1_INST);
     DL_TimerG_reset(TIMER_2_INST);
     DL_ADC12_reset(ADC12_0_INST);
+    DL_ADC12_reset(ADC12_1_INST);
     DL_COMP_reset(COMP_0_INST);
     DL_COMP_reset(COMP_1_INST);
     DL_VREF_reset(VREF);
@@ -133,6 +135,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
     DL_TimerA_enablePower(TIMER_1_INST);
     DL_TimerG_enablePower(TIMER_2_INST);
     DL_ADC12_enablePower(ADC12_0_INST);
+    DL_ADC12_enablePower(ADC12_1_INST);
     DL_COMP_enablePower(COMP_0_INST);
     DL_COMP_enablePower(COMP_1_INST);
     DL_VREF_enablePower(VREF);
@@ -167,6 +170,8 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 
     DL_GPIO_initDigitalOutput(LED_LED1_IOMUX);
 
+    DL_GPIO_initDigitalOutput(BEEP_BEEP1_IOMUX);
+
     DL_GPIO_initDigitalOutput(TEST_PIN_0_IOMUX);
 
     DL_GPIO_initDigitalOutput(TEST_PIN_1_IOMUX);
@@ -185,9 +190,11 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 		RECV_INDICATOR_RECV0_PIN |
 		RECV_INDICATOR_RECV1_PIN |
 		RECV_INDICATOR_DETECTED_PIN);
-    DL_GPIO_clearPins(TEST_PORT, TEST_PIN_0_PIN |
+    DL_GPIO_clearPins(GPIOB, BEEP_BEEP1_PIN |
+		TEST_PIN_0_PIN |
 		TEST_PIN_1_PIN);
-    DL_GPIO_enableOutput(TEST_PORT, TEST_PIN_0_PIN |
+    DL_GPIO_enableOutput(GPIOB, BEEP_BEEP1_PIN |
+		TEST_PIN_0_PIN |
 		TEST_PIN_1_PIN);
 
 }
@@ -525,6 +532,28 @@ SYSCONFIG_WEAK void SYSCFG_DL_ADC12_0_init(void)
     DL_ADC12_enableInterrupt(ADC12_0_INST,(DL_ADC12_INTERRUPT_DMA_DONE));
     NVIC_SetPriority(ADC12_0_INST_INT_IRQN, 1);
     DL_ADC12_enableConversions(ADC12_0_INST);
+}
+/* ADC12_1 Initialization */
+static const DL_ADC12_ClockConfig gADC12_1ClockConfig = {
+    .clockSel       = DL_ADC12_CLOCK_ULPCLK,
+    .divideRatio    = DL_ADC12_CLOCK_DIVIDE_1,
+    .freqRange      = DL_ADC12_CLOCK_FREQ_RANGE_32_TO_40,
+};
+SYSCONFIG_WEAK void SYSCFG_DL_ADC12_1_init(void)
+{
+    DL_ADC12_setClockConfig(ADC12_1_INST, (DL_ADC12_ClockConfig *) &gADC12_1ClockConfig);
+    DL_ADC12_initSingleSample(ADC12_1_INST,
+        DL_ADC12_REPEAT_MODE_ENABLED, DL_ADC12_SAMPLING_SOURCE_AUTO, DL_ADC12_TRIG_SRC_SOFTWARE,
+        DL_ADC12_SAMP_CONV_RES_12_BIT, DL_ADC12_SAMP_CONV_DATA_FORMAT_UNSIGNED);
+    DL_ADC12_configConversionMem(ADC12_1_INST, ADC12_1_ADCMEM_0,
+        DL_ADC12_INPUT_CHAN_0, DL_ADC12_REFERENCE_VOLTAGE_VDDA, DL_ADC12_SAMPLE_TIMER_SOURCE_SCOMP0, DL_ADC12_AVERAGING_MODE_DISABLED,
+        DL_ADC12_BURN_OUT_SOURCE_DISABLED, DL_ADC12_TRIGGER_MODE_AUTO_NEXT, DL_ADC12_WINDOWS_COMP_MODE_DISABLED);
+    DL_ADC12_setSampleTime0(ADC12_1_INST,5000);
+    /* Enable ADC12 interrupt */
+    DL_ADC12_clearInterruptStatus(ADC12_1_INST,(DL_ADC12_INTERRUPT_MEM0_RESULT_LOADED));
+    DL_ADC12_enableInterrupt(ADC12_1_INST,(DL_ADC12_INTERRUPT_MEM0_RESULT_LOADED));
+    NVIC_SetPriority(ADC12_1_INST_INT_IRQN, 0);
+    DL_ADC12_enableConversions(ADC12_1_INST);
 }
 
 /* COMP_0 Initialization */
