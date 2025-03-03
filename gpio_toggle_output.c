@@ -22,16 +22,6 @@ int main(void)
     /* Power on GPIO, initialize pins as digital outputs */
     SYSCFG_DL_init();
 
-    for(int i = 0; i < 8; i++){
-        delay_cycles(DELAY/8);
-        DL_GPIO_togglePins(LED_PORT, LED_LED1_PIN);
-    }
-
-    //pwm测试
-    // DL_TimerG_setCaptureCompareValue(PWM_1_INST, 2000, DL_TIMER_CC_0_INDEX);
-    // DL_TimerG_setCaptureCompareValue(PWM_2_INST, 2000, DL_TIMER_CC_0_INDEX);
-
-
     Remote_init();
     Battery_Init();
     Chassis_Init();
